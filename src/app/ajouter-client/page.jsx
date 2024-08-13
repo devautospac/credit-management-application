@@ -8,7 +8,7 @@ const page = async () => {
   if (!currentUser) {
     return (
       <div className="w-full h-screen flex justify-center items-center gap-2">
-        Vous n'êtes pas autorisé à accéder à cette page
+        Vous n&apos;êtes pas autorisé à accéder à cette page
       </div>
     );
   }
