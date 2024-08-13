@@ -19,10 +19,6 @@ export default function ClientPage({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    router.refresh();
-  }, []);
-
-  useEffect(() => {
     const fetchClient = async () => {
       try {
         const res = await fetch(
