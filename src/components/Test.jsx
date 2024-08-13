@@ -10,7 +10,7 @@ export default function Test({ currentUser }) {
 
   useEffect(() => {
     if (!currentUser && !isLoggedIn) {
-      router.push("/login");
+      router.push("kefy.xyz/login");
     }
   }, [currentUser, isLoggedIn, router]);
 
