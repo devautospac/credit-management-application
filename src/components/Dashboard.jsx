@@ -53,6 +53,7 @@ export function Dashboard() {
   const router = useRouter();
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchId, setSearchId] = useState("");
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState(null);
   const [totalCredit, setTotalCredit] = useState(0);
@@ -158,8 +159,18 @@ export function Dashboard() {
     );
   });
 
+  const filteredById = clients.filter((client) => {
+    if (!searchId) return true; // If searchId is empty, show all clients
+    return client.id?.toString().includes(searchId);
+  });
+
+  // Combine both filters
+  const finalFilteredClients = filteredClients.filter((client) =>
+    filteredById.includes(client)
+  );
+
   const sortedClients = (() => {
-    let clientsToSort = [...filteredClients];
+    let clientsToSort = [...finalFilteredClients];
 
     if (isSortedByOldest) {
       // Get current date and calculate the date 2 months ago
@@ -303,16 +314,24 @@ export function Dashboard() {
       <div className="mt-6 relative">
         <div className="flex items-center">
           <Input
+            type="text"
+            placeholder="Num"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
+            className="w-1/4"
+          />
+          <Input
             placeholder="Recherche par lettre ou numéro"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="mr-2"
+            className="mx-1"
           />
+
           <Button
             onClick={() => {
               router.push("ajouter-client");
             }}
-            className="ml-4 bg-orange-500 text-white"
+            className="ml-1 bg-orange-500 text-white"
           >
             <PlusIcon className="w-4 h-4 mr-2" />
             Ajouter Client
@@ -324,6 +343,7 @@ export function Dashboard() {
         <Table className="w-full bg-white rounded-md shadow-md">
           <TableHeader className="bg-blue-100">
             <TableRow>
+              <TableHead className="p-4  text-[10px] lg:text-sm">NUM</TableHead>
               <TableHead className="p-4  text-[10px] lg:text-sm">Nom</TableHead>
               <TableHead className="p-4 hidden lg:table-cell ">
                 Numéro Téléphone
@@ -370,6 +390,9 @@ export function Dashboard() {
             ) : (
               displayedClients.map((client) => (
                 <TableRow key={client.id}>
+                  <TableCell className="p-4 text-[10px] lg:text-sm">
+                    {client.id}
+                  </TableCell>
                   <TableCell className="p-4 text-[10px] lg:text-sm">
                     {client.name}
                   </TableCell>
