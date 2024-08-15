@@ -197,6 +197,11 @@ export function Dashboard() {
   const afterSorting = (() => {
     let clientsToSort = [...sortedClients];
 
+    // Filter out clients without a name
+    clientsToSort = clientsToSort.filter(
+      (client) => client.name && client.name.trim() !== ""
+    );
+
     if (isDate) {
       clientsToSort.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
