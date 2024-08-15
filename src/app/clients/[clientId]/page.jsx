@@ -22,7 +22,7 @@ export default function ClientPage({ params }) {
     const fetchClient = async () => {
       try {
         const res = await fetch(
-          `https://cre.otospexerp.com/api/clients/${clientId}`
+          `https://back.kefy.xyz/api/clients/${clientId}`
         );
         if (res.ok) {
           const data = await res.json();

@@ -72,7 +72,7 @@ export function Dashboard() {
 
   const fetchClients = async () => {
     try {
-      const res = await fetch(`https://cre.otospexerp.com/api/clients`);
+      const res = await fetch(`https://back.kefy.xyz/api/clients`);
       if (res.ok) {
         const data = await res.json();
         setClients(data);
@@ -88,7 +88,7 @@ export function Dashboard() {
 
   const fetchMetrics = async () => {
     try {
-      const res = await fetch("https://cre.otospexerp.com/api/statistics");
+      const res = await fetch("https://back.kefy.xyz/api/statistics");
 
       if (!res.ok) {
         const errorMsg = await res.json().catch(() => ({
@@ -124,7 +124,7 @@ export function Dashboard() {
   const handleDeleteClient = async () => {
     try {
       const res = await fetch(
-        `https://cre.otospexerp.com/api/clients/${selectedClientId}`,
+        `https://back.kefy.xyz/api/clients/${selectedClientId}`,
         {
           method: "DELETE",
         }

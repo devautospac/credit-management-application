@@ -32,7 +32,7 @@ export default function ClientPage() {
     setLoading(true); // Set loading state to true
 
     try {
-      const res = await fetch("https://cre.otospexerp.com/api/clients", {
+      const res = await fetch("https://back.kefy.xyz/api/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
