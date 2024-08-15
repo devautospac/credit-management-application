@@ -161,7 +161,7 @@ export function Dashboard() {
 
   const filteredById = clients.filter((client) => {
     if (!searchId) return true; // If searchId is empty, show all clients
-    return client.id?.toString().includes(searchId);
+    return client.id?.toString() === searchId;
   });
 
   // Combine both filters
