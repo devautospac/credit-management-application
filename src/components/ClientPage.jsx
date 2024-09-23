@@ -5,6 +5,7 @@ import { BsArrowLeftCircleFill } from "react-icons/bs";
 
 export default function ClientPage() {
   const [formData, setFormData] = useState({
+    id: "",
     name: "",
     num: "",
     credit: "",
@@ -32,7 +33,7 @@ export default function ClientPage() {
     setLoading(true); // Set loading state to true
 
     try {
-      const res = await fetch("https://back.kefy.xyz/api/clients", {
+      const res = await fetch("http://localhost:8000/api/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,6 +73,22 @@ export default function ClientPage() {
         <div className="w-full  max-w-7xl p-8 space-y-6 bg-white rounded shadow-md">
           <form onSubmit={handleSubmit} className="space-y-4 w-full">
             <div className="grid grid-cols-2 gap-4">
+            <div>
+                <label
+                  htmlFor="id"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Num (Optional)
+                </label>
+                <input
+                  type="number"
+                  id="id"
+                  name="id"
+                  value={formData.id}
+                  onChange={handleChange}
+                  className="block w-full px-6 py-3 mt-1 text-lg border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
               <div>
                 <label
                   htmlFor="name"

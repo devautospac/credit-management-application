@@ -69,10 +69,11 @@ export function Dashboard() {
   const [pagin, setPagin] = useState(false);
   const [isDate, setDate] = useState(false);
   const [isCredit, setCredit] = useState(false);
+  const [isSortedByNum, setIsSortedByNum] = useState(false); // Add state for sorting by NUM
 
   const fetchClients = async () => {
     try {
-      const res = await fetch(`https://back.kefy.xyz/api/clients`);
+      const res = await fetch(`http://localhost:8000/api/clients`);
       if (res.ok) {
         const data = await res.json();
         setClients(data);
@@ -88,7 +89,7 @@ export function Dashboard() {
 
   const fetchMetrics = async () => {
     try {
-      const res = await fetch("https://back.kefy.xyz/api/statistics");
+      const res = await fetch("http://localhost:8000/api/statistics");
 
       if (!res.ok) {
         const errorMsg = await res.json().catch(() => ({
@@ -124,7 +125,7 @@ export function Dashboard() {
   const handleDeleteClient = async () => {
     try {
       const res = await fetch(
-        `https://back.kefy.xyz/api/clients/${selectedClientId}`,
+        `http://localhost:8000/api/clients/${selectedClientId}`,
         {
           method: "DELETE",
         }
@@ -171,7 +172,6 @@ export function Dashboard() {
 
   const sortedClients = (() => {
     let clientsToSort = [...finalFilteredClients];
-
     if (isSortedByOldest) {
       // Get current date and calculate the date 2 months ago
       const twoMonthsAgo = new Date();
@@ -194,6 +194,7 @@ export function Dashboard() {
     return clientsToSort;
   })();
 
+
   const afterSorting = (() => {
     let clientsToSort = [...sortedClients];
 
@@ -208,6 +209,9 @@ export function Dashboard() {
 
     if (isCredit) {
       clientsToSort.sort((a, b) => b.gredit - a.gredit);
+    }
+    if (isSortedByNum) {
+      clientsToSort.sort((a, b) => +(a.id) - +(b.id)); 
     }
 
     return clientsToSort;
@@ -348,7 +352,12 @@ export function Dashboard() {
         <Table className="w-full bg-white rounded-md shadow-md">
           <TableHeader className="bg-blue-100">
             <TableRow>
-              <TableHead className="p-4  text-[10px] lg:text-sm">NUM</TableHead>
+              <TableHead className="p-4  text-[10px] lg:text-sm cursor-pointer" onClick={() => setIsSortedByNum(!isSortedByNum)}>
+                <div className="flex items-center gap-2">
+                  <div>NUM</div>
+                  <LuArrowDownUp />
+                </div>
+              </TableHead>
               <TableHead className="p-4  text-[10px] lg:text-sm">Nom</TableHead>
               <TableHead className="p-4 hidden lg:table-cell ">
                 Numéro Téléphone
@@ -359,8 +368,8 @@ export function Dashboard() {
                   onClick={() => setCredit(!isCredit)}
                 >
                   <div className="flex gap-1">
-                    <div>Total</div>
-                    <div>Crédit</div>
+                    <div>Total
+                    Crédit</div>
                   </div>
                   <LuArrowDownUp />
                 </div>

@@ -22,7 +22,7 @@ export default function ClientPage({ params }) {
     const fetchClient = async () => {
       try {
         const res = await fetch(
-          `https://back.kefy.xyz/api/clients/${clientId}`
+          `http://localhost:8000/api/clients/${clientId}`
         );
         if (res.ok) {
           const data = await res.json();
